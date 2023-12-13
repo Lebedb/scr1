@@ -31,7 +31,7 @@ SECTIONS {
     *(.text.init) 
   } >RAM
 
-  .text  : {
+  .text.start 0xF00  : {
     *crt.o(.text .text.*)
     *(.text .text.*)
     *(sc_test_section)
