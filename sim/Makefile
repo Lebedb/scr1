@@ -89,6 +89,7 @@ build_verilator: $(sv_list)
 	-D$(SIM_TRACE_DEF) \
 	-D$(SIM_CFG_DEF) \
 	--clk clk \
+	-timing \
 	--exe $(scr1_wrapper) \
 	--Mdir $(bld_dir)/verilator \
 	-I$(rtl_inc_dir) \
@@ -103,6 +104,7 @@ build_verilator_wf: $(sv_list)
 	verilator \
 	-cc \
 	-sv \
+	-timing \
 	+1800-2017ext+sv \
 	-Wno-fatal \
 	--top-module $(top_module) \
