@@ -104,7 +104,7 @@
 #define RVTEST_CODE_BEGIN                                               \
         .org 0xF00, 0x000;                                              \
         MSG_TRAP:                                                       \
-        .string "incoreect instruction";                                \
+        .string "incorrect instruction";                                \
         .section .text.init;                                            \
         .balign  64;                                                    \
         .weak stvec_handler;                                            \
