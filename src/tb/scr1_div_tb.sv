@@ -31,7 +31,7 @@ always_ff @(posedge clk) begin
         if ((opcode == 7'b0110011) && (funct3 == 3'b100)) begin
             // detect DIV command
             $display("DIV command detected. Attributes:\n");
-            $display("divisor = %b\n dividend = %b\n", divisor, dividend);
+            $display("divisor = %b\ndividend = %b\n", divisor, dividend);
         end
     end
 end
