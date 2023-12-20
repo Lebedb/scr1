@@ -13,17 +13,22 @@ logic [1:0] resp  ;
 
 logic [6:0] opcode;
 logic [2:0] funct3;
+logic [4:0] rs1   ;
+logic [4:0] rs2   ;
 
-logic [4:0] divisor;
-logic [4:0] dividend;
+logic [31:0] divisor ;
+logic [31:0] dividend;
 
 assign clk    = scr1_top_tb_ahb.i_top.i_imem_ahb.clk;
 assign resp   = scr1_top_tb_ahb.i_top.i_imem_ahb.imem_resp;
 assign opcode = scr1_top_tb_ahb.i_top.i_imem_ahb.imem_rdata[6:0];
 assign funct3 = scr1_top_tb_ahb.i_top.i_imem_ahb.imem_rdata[14:12]; 
 
-assign dividend = scr1_top_tb_ahb.i_top.i_imem_ahb.imem_rdata[19:15]; 
-assign divisor  = scr1_top_tb_ahb.i_top.i_imem_ahb.imem_rdata[24:20]; 
+assign rs1 = scr1_top_tb_ahb.i_top.i_imem_ahb.imem_rdata[19:15]; 
+assign rs2 = scr1_top_tb_ahb.i_top.i_imem_ahb.imem_rdata[24:20]; 
+
+assign dividend = scr1_top_tb_ahb.i_top.i_core_top.i_pipe_top.i_pipe_mprf.mprf_int[rs1]; 
+assign divisor  = scr1_top_tb_ahb.i_top.i_core_top.i_pipe_top.i_pipe_mprf.mprf_int[rs2]; 
 
 always_ff @(posedge clk) begin
     if (resp == 2'b01) begin
@@ -31,7 +36,7 @@ always_ff @(posedge clk) begin
         if ((opcode == 7'b0110011) && (funct3 == 3'b100)) begin
             // detect DIV command
             $display("DIV command detected. Attributes:\n");
-            $display("divisor = %b\ndividend = %b\n", divisor, dividend);
+            $display("divisor = %d\ndividend = %d\n", divisor, dividend);
         end
     end
 end
